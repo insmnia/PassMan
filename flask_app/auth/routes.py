@@ -1,8 +1,10 @@
 from flask import render_template, url_for, flash, redirect, Blueprint, request
 from flask_app.models import User
-from flask_app.auth.forms import LoginForm, RegistrationForm, ResetPasswordForm
+from flask_app.auth.forms import (LoginForm, RegistrationForm,
+                                  SendResetPasswordForm, ResetPasswordForm)
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_app import db, bcrypt
+from flask_app.auth.email import send_email
 auth = Blueprint("auth", __name__)
 
 
@@ -46,8 +48,33 @@ def logout():
 
 
 @auth.route("/reset_password", methods=['GET', 'POST'])
-def reset_password():
+def send_reset_password_email():
+    form = SendResetPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None:
+            send_email(user)
+        flash("Следуйте инструкциям на почте для восстановления пароля")
+        return redirect(url_for("auth.sign_in"))
+    return render_template('send_reset_password_email.html', form=form)
+
+# доделать
+
+
+@auth.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    user = User.verify_token(token)
+    if not user:
+        return redirect(url_for("auth.sign_in"))
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        pass
+        user.set_password(
+            password=bcrypt.generate_password_hash(
+                form.new_password.data)
+        )
+        db.session.commit()
+        flash("Пароль успешно сменен!")
+        return redirect(url_for("auth.sign_in"))
     return render_template('reset_password.html', form=form)

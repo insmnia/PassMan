@@ -34,6 +34,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Войти")
 
 
-class ResetPasswordForm(FlaskForm):
+class SendResetPasswordForm(FlaskForm):
     email = StringField("Почта", validators=[DataRequired(), Email()])
     submit = SubmitField("Отправить письмо")
+
+
+class ResetPasswordForm(FlaskForm):
+    new_password = PasswordField("Новый пароль", validators=[DataRequired()])
+    submit = SubmitField("Обновить пароль")

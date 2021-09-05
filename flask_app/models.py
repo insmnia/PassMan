@@ -1,6 +1,9 @@
 from datetime import datetime
 from flask_app import db, login_manager
 from flask_login import UserMixin
+from flask import current_app as app
+from time import time
+import jwt
 
 
 @login_manager.user_loader
@@ -20,6 +23,26 @@ class User(db.Model, UserMixin):
 
     def change_email(self, new_email):
         self.email = new_email
+
+    def set_password(self, password):
+        self.password = password
+
+    def get_reset_password_token(self, expires=600):
+        return jwt.encode(
+            {"reset_password": self.id, "exp": time()+expires, },
+            app.config["SECRET_KEY"], algorithm="HS256"
+        ).decode("utf-8")
+
+    @staticmethod
+    def verify_token(token):
+        try:
+            id = jwt.decode(
+                token, app.config["SECRET_KEY"],
+                algorithm="HS256"
+            )['reset_password']
+        except:
+            return
+        return User.query.get(id)
 
 
 class Password(db.Model):
