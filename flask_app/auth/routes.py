@@ -4,7 +4,7 @@ from flask_app.auth.forms import (LoginForm, RegistrationForm,
                                   SendResetPasswordForm, ResetPasswordForm)
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_app import db, bcrypt
-from flask_app.auth.email import send_email
+from flask_app.auth.email import reset_email
 auth = Blueprint("auth", __name__)
 
 
@@ -21,7 +21,7 @@ def sign_in():
         login_user(user)
         next_page = request.args.get('next')
         return redirect(next_page) if next_page else redirect(url_for("main.index"))
-    return render_template('login.html', form=form, title="Авторизация")
+    return render_template('auth/login.html', form=form, title="Авторизация")
 
 
 @auth.route('/sign up', methods=['GET', 'POST'])
@@ -38,7 +38,7 @@ def sign_up():
         db.session.commit()
         flash("Приветствуем нового пользователя!", "success")
         return redirect(url_for("auth.sign_in"))
-    return render_template('register.html', form=form, title='Авторизация')
+    return render_template('auth/register.html', form=form, title='Регистрация')
 
 
 @auth.route("/logout")
@@ -53,12 +53,13 @@ def send_reset_password_email():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None:
-            send_email(user)
-        flash("Следуйте инструкциям на почте для восстановления пароля")
-        return redirect(url_for("auth.sign_in"))
-    return render_template('send_reset_password_email.html', form=form)
-
-# доделать
+            reset_email(user)
+            flash("Следуйте инструкциям на почте для восстановления пароля")
+            return redirect(url_for("auth.sign_in"))
+        else:
+            flash("Пользователь с такой почтой не найден!")
+            return redirect(url_for("auth.sign_in"))
+    return render_template('email/send_reset_password_email.html', form=form, title="Сброс пароля")
 
 
 @auth.route("/reset_password/<token>", methods=['GET', 'POST'])
@@ -77,4 +78,4 @@ def reset_password(token):
         db.session.commit()
         flash("Пароль успешно сменен!")
         return redirect(url_for("auth.sign_in"))
-    return render_template('reset_password.html', form=form)
+    return render_template('email/reset_password.html', form=form, title="Сброс пароля")

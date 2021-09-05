@@ -50,22 +50,18 @@ def index():
         db.session.commit()
         flash("Пароль обновлен!")
         return redirect(url_for('main.index'))
-    return render_template('index.html',
+    return render_template('main/index.html',
+                           title='Главная',
                            add_password_form=add_password_form,
                            get_password_form=get_password_form,
                            change_password_form=change_password_form
                            )
 
 
-@main.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', user=current_user)
+    return render_template('profile/profile.html', user=current_user, title="Профиль")
 
 
 @main.route('/change_master_password', methods=['GET', 'POST'])
@@ -83,7 +79,7 @@ def change_master_password():
         else:
             flash('Мастер-пароль введен неверно и/или пароли совпадают')
             return redirect(url_for('main.change_master_password'))
-    return render_template('change_master_password.html', form=form)
+    return render_template('profile/change_master_password.html', form=form, title="Смена пароля")
 
 
 @main.route("/change_email", methods=["GET", "POST"])
@@ -95,4 +91,4 @@ def change_email():
         db.session.commit()
         flash("Почта успешно сменена!")
         return redirect(url_for('main.profile'))
-    return render_template('change_email.html', form=form)
+    return render_template('profile/change_email.html', form=form, title="Смена почты")

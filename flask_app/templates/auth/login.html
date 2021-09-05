@@ -36,21 +36,16 @@
                     {{ form.submit(class="btn btn-outline-info") }}
                 </div>
                 <small class="text-muted ml-2">
-                    <a href="#">Забыли пароль?</a>
-                </small>
-            </form>
-        </div>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Нет аккаунта? <a class="ml-2" href="{{ url_for('auth.sign_up') }}">Создать сейчас</a>
-            </small>
-            <p>
-                <small class="text-muted">
                     Забыли пароль? <a class="ml-2" href="{{ url_for('auth.send_reset_password_email') }}">Восстановить
                     </a>
                 </small>
-            </p>
+                <p>
+                    <small class="text-muted ml-2">
+                        Нет аккаунта? <a class="ml-2" href="{{ url_for('auth.sign_up') }}">Создать сейчас</a>
+                    </small>
+                </p>
 
+            </form>
         </div>
     </div><!-- /.row -->
 </div><!-- /.container -->
