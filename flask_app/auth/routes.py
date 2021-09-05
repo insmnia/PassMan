@@ -1,9 +1,6 @@
 from flask import render_template, url_for, flash, redirect, Blueprint, request
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Length, Email, EqualTo
 from flask_app.models import User
-from flask_app.auth.forms import LoginForm, RegistrationForm
+from flask_app.auth.forms import LoginForm, RegistrationForm, ResetPasswordForm
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_app import db, bcrypt
 auth = Blueprint("auth", __name__)
@@ -46,3 +43,11 @@ def sign_up():
 def logout():
     logout_user()
     return redirect(url_for("main.index"))
+
+
+@auth.route("/reset_password", methods=['GET', 'POST'])
+def reset_password():
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        pass
+    return render_template('reset_password.html', form=form)

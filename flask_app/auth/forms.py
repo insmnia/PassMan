@@ -32,3 +32,8 @@ class LoginForm(FlaskForm):
         "Имя пользователя", validators=[DataRequired()])
     password = PasswordField("Пароль", validators=[DataRequired()])
     submit = SubmitField("Войти")
+
+
+class ResetPasswordForm(FlaskForm):
+    email = StringField("Почта", validators=[DataRequired(), Email()])
+    submit = SubmitField("Отправить письмо")

@@ -1,5 +1,7 @@
 from flask import render_template, request, Blueprint, flash, redirect, url_for
-from flask_app.main.forms import AddPasswordForm, GetPasswordForm, ChangeMasterPasswordForm, ChangePasswordForm, ChangeEmailForm
+from flask_app.main.forms import (AddPasswordForm, GetPasswordForm,
+                                  ChangeMasterPasswordForm, ChangePasswordForm,
+                                  ChangeEmailForm)
 from flask_app.models import Password, User
 from flask_login import login_required, current_user
 from flask_app import bcrypt, db
