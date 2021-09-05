@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Добавить пароль -->
+        <div class="col-sm">
+            <form method="POST" action="" autocomplete="off">
+                {{ add_password_form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-1">Добавить пароль</legend>
+                    <div class="form-group">
+                        {{ add_password_form.password_name.label(class="form-control-label") }}
+                        {% if add_password_form.password_name.errors %}
+                        {{ add_password_form.password_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in add_password_form.password_name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ add_password_form.password_name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ add_password_form.master_password.label(class="form-control-label") }}
+                        {% if add_password_form.master_password.errors %}
+                        {{ add_password_form.master_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in add_password_form.master_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ add_password_form.master_password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ add_password_form.password.label(class="form-control-label") }}
+                        {% if add_password_form.password.errors %}
+                        {{ add_password_form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in add_password_form.password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ add_password_form.password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ add_password_form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+        <!-- Узнать пароль -->
+        <div class="col-sm">
+            <form method="POST" action="" autocomplete="off">
+                {{ get_password_form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-1">Узнать пароль</legend>
+                    <div class="form-group">
+                        {{ get_password_form.password_name.label(class="form-control-label") }}
+                        {% if get_password_form.password_name.errors %}
+                        {{ get_password_form.password_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in get_password_form.password_name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ get_password_form.password_name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ get_password_form.master_password.label(class="form-control-label") }}
+                        {% if get_password_form.master_password.errors %}
+                        {{ get_password_form.master_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in get_password_form.master_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ get_password_form.master_password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ get_password_form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+        <!-- Изменить пароль -->
+        <div class="col-sm">
+            <form method="POST" action="" autocomplete="off">
+                {{ change_password_form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-1">Сменить пароль</legend>
+                    <div class="form-group">
+                        {{ change_password_form.password_name.label(class="form-control-label") }}
+                        {% if change_password_form.password_name.errors %}
+                        {{ change_password_form.password_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in change_password_form.password_name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ change_password_form.password_name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ change_password_form.master_password.label(class="form-control-label") }}
+                        {% if change_password_form.master_password.errors %}
+                        {{ change_password_form.master_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in change_password_form.master_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ change_password_form.master_password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ change_password_form.old_password.label(class="form-control-label") }}
+                        {% if change_password_form.old_password.errors %}
+                        {{ change_password_form.old_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in change_password_form.old_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ change_password_form.old_password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ change_password_form.new_password.label(class="form-control-label") }}
+                        {% if change_password_form.new_password.errors %}
+                        {{ change_password_form.new_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in change_password_form.new_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ change_password_form.new_password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ change_password_form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
