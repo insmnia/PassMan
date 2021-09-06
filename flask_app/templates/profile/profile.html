@@ -24,6 +24,7 @@
         <div class="col">
             <h4>Ваши аккаунты</h4>
             {% for upass in user.passwords %}
+            <p>
             <div class="btn-group">
                 <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -34,6 +35,7 @@
                     <li>Добавлен - {{ upass.date_added|date }}</li>
                 </ul>
             </div>
+            </p>
             {% endfor %}
         </div>
     </div>
