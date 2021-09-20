@@ -1,5 +1,5 @@
 from flask_mail import Message
-from flask_app import mail
+from app import mail
 from flask import render_template, current_app as app
 
 

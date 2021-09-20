@@ -4,7 +4,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
-from flask_app.config import Config
+from app.config import Config
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 mail = Mail()
@@ -23,8 +23,8 @@ def create_app():
     db.init_app(app)
     bcrypt.init_app(app)
     mail.init_app(app)
-    from flask_app.auth.routes import auth
-    from flask_app.main.routes import main
+    from app.auth.routes import auth
+    from app.main.routes import main
     app.register_blueprint(auth, prefix="/auth")
     app.register_blueprint(main)
 
