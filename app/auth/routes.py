@@ -15,7 +15,7 @@ def sign_in():
         return redirect(url_for("main.index"))
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not bcrypt.check_password_hash(user.password, form.password.data):
+        if user is None or not user.check_password(form.password.data):
             flash("Неправильное имя пользователя и/или пароль!")
             return redirect(url_for("auth.sign_in"))
         login_user(user)
