@@ -1,5 +1,5 @@
-from flask_app import create_app, db
-from flask_app.models import User, Password
+from app import create_app, db
+from app.models import User, Password
 
 app = create_app()
 
