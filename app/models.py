@@ -56,6 +56,15 @@ class User(db.Model, UserMixin):
         }
         return data
     
+    def from_dict(self,data):
+        for field in ["username","email"]:
+            if field in data:
+                setattr(self,field,data[field])
+        if "password" in data:
+            self.set_password(bcrypt.generate_password_hash(
+            data["password"]).decode('utf-8'))
+            
+
     def get_token(self,expires_in=3600):
         now = datetime.utcnow()
         if self.token and self.token_expiration > now+timedelta(seconds=60):
@@ -91,3 +100,11 @@ class Password(db.Model):
 
     def change_password(self, new_password):
         self.password_content = new_password
+    
+    def to_dict(self):
+        data = {
+            "password_name":self.password_name,
+            "content":self.password_content,
+            "created":self.date_added
+        }
+        return data
