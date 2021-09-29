@@ -26,9 +26,9 @@ def create_app():
     from app.auth.routes import auth
     from app.main.routes import main
     from app.api import api
-    app.register_blueprint(auth, prefix="/auth")
+    app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(main)
-    app.register_blueprint(api,prefix="/api")
+    app.register_blueprint(api,url_prefix="/api")
 
     @app.template_filter('date')
     def datetimeformat(value):  # 2021-09-05 00:15:40.738222
