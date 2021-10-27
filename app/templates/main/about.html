@@ -1,0 +1,213 @@
+{% extends "base.html" %} {% block content %}
+<!-- <link rel="stylesheet" type="text/css" href="cards.css" /> -->
+<style>
+  //- Google Fonts
+  $font-google-primary: 'https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap';
+  $font-google-secondary: 'https://fonts.googleapis.com/css2?family=Montserrat&display=swap';
+
+  //- @type List
+  $abril-fatface: 'Abril Fatface', cursive;
+  $montserrat: 'Montserrat', sans-serif;
+
+  //- Typography
+  $base-font-family: $montserrat;
+  $heading-font-family: $abril-fatface;
+
+  $font-size-small: 20px;
+
+  /*- Screen Sizes*/
+  $tablet-width: 768px;
+  $desktop-width: 1024px;
+
+  /* COLOR HEX */
+  $cadet: #4f6d7aff;
+  $maximum-blue: #5ea5b8ff;
+  $columbia-blue: #c0d6dfff;
+  $platinum: #eaeaeaff;
+  $cultured: #f3f3f3ff;
+  $nero: #444444;
+
+  /* COLOR Gradient */
+  $dl-gradient-right: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 20%,
+    rgba(255, 255, 255, 0) 0%
+  );
+
+  $body-background-color: $platinum;
+  $body-text-color: $nero;
+
+  //- Global Functions
+  /*import fonts*/
+  @if variable-exists(font-google-primary) {
+    @import url($font-google-primary);
+  }
+  @if variable-exists(font-google-secondary) {
+    @import url($font-google-secondary);
+  }
+
+  //- Global Mixins
+
+  /*media queries*/
+  @mixin tablet {
+    @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+      @content;
+    }
+  }
+
+  @mixin desktop {
+    @media (min-width: #{$desktop-width}) {
+      @content;
+    }
+  }
+
+  @mixin tablet-up {
+    @media (min-width: #{$tablet-width}) {
+      @content;
+    }
+  }
+
+  html {
+    box-sizing: border-box;
+  }
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    background-color: black;
+    font-family: $base-font-family;
+    font-size: $font-size-small;
+    color: white;
+    line-height: 1.5;
+  }
+  .dl-blurbs {
+    display: grid;
+    @include tablet-up {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2vw;
+    }
+  }
+  /* LIST */
+  dl {
+    counter-reset: count;
+    background: $dl-gradient-right;
+    padding-left: 4vw; //default is smartphone
+    padding-right: 4vw;
+    margin: 0;
+    @include tablet-up {
+      padding-left: 2vw;
+    }
+    @include desktop {
+      padding-top: 3vw;
+      padding-bottom: 3vw;
+    }
+  }
+  dl + dl {
+    counter-reset: counter 4;
+  }
+  dt {
+    counter-increment: count;
+    color: $cadet;
+    font-family: $base-font-family;
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+  dt::before {
+    content: counter(count, decimal-leading-zero) '.';
+    font-family: $heading-font-family;
+    color: $maximum-blue;
+    margin-left: -1vw;
+    padding-right: 12px;
+  }
+
+  dd {
+    margin-left: 5vw;
+    margin-bottom: 2vh;
+  }
+</style>
+<section class="dl-blurbs">
+  <dl>
+    <dt>Регистрация</dt>
+    <dd>
+      Чтобы создать учетную запись, перейдите на страницу
+      <a href="{{ url_for('auth.sign_up') }}">Регистрация</a>
+      , заполните форму в соответствии с описанием полей и нажмите кнопку
+      <b>Создать аккаунт</b>
+    </dd>
+    <dt>Авторизация</dt>
+    <dd>
+      Чтобы войти в учетную запись, перейдите на страницу
+      <a href="{{ url_for('auth.sign_in') }}">авторизации</a>
+      , заполните форму в соответствии с описанием полей и нажмите кнопку
+      <b>Войти</b>
+    </dd>
+    <dt>Восстановление пароля (1 часть)</dt>
+    <dd>
+      Если Вы забыли пароль от Вашей учетной записи, перейдите на страницу
+      <a href="{{ url_for('auth.sign_in') }}">авторизации</a>
+      и нажмите на ссылку
+      <a href="{{ url_for('auth.send_reset_password_email') }}">Восстановить</a>
+      . Вы будете перенаправлены на страницу восстановления пароля, где нужно
+      будет ввести адрес электронной почты, указанной при создании учетной
+      записи. После заполнения формы нажмите на кнопку
+      <b>Отправить Письмо</b>
+      . Если почта введена верно, то на нее придет сообщения с инструкциями по
+      восстановлению пароля
+    </dd>
+  </dl>
+  <dl>
+    <dt>Восстановление пароля (2 часть)</dt>
+    <dd>
+      После перехода по ссылке из сообщения, Вы будете перенаправлены на
+      страницу для создания нового пароля. Введите новый пароль и нажмите
+      <b>Сменить</b>
+    </dd>
+    <dt>Добавление пароля</dt>
+    <dd>
+      Чтобы создать пароль, перейдите на главную страницу и заполнить поля с
+      заголовком "Добавить пароль". Введите "имя" для пароля, мастер-пароль
+      (пароль от аккаунта) и сам сохраняемый пароль. Далее нажмите
+      <b>Добавить</b>
+    </dd>
+    <dt>Просмотр паролей</dt>
+    <dd>
+      Чтобы просмотреть пароль, перейдите на главную и заполните поля с
+      заголовком "Узнать пароль". Заполните поля и нажмите
+      <b>"Узнать"</b>
+    </dd>
+    <dt>Смена паролей</dt>
+    <dd>
+      Перейдите на главную и заполните форму с заголовком "Сменить пароль".
+      Далее нажмите
+      <b>"Сменить"</b>
+    </dd>
+    <dt>Смена мастер-пароля</dt>
+    <dd>
+      Чтобы сменить пароль, перейдите в
+      <a href="{{ url_for('main.profile') }}">Профиль</a>
+      и справа в
+      <b>карточке</b>
+      нажмите кнопку
+      <b>Сменить пароль</b>
+      . Далее вас отправит на страницу для смены пароля. Заполните форму в
+      соответствии с описанием и нажмите кнопку
+      <b>Сменить</b>
+    </dd>
+    <dt>Смена почты</dt>
+    <dd>
+      Чтобы сменить пароль, перейдите в
+      <a href="{{ url_for('main.profile') }}">Профиль</a>
+      и справа в
+      <b>карточке</b>
+      нажмите кнопку
+      <b>Сменить пароль</b>
+      . Далее вас отправит на страницу для смены пароля. Заполните форму в
+      соответствии с описанием и нажмите кнопку
+      <b>Сменить</b>
+    </dd>
+  </dl>
+</section>
+{% endblock content %}

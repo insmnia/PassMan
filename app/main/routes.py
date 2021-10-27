@@ -1,7 +1,7 @@
 from flask import render_template, request, Blueprint, flash, redirect, url_for
 from app.main.forms import (AddPasswordForm, GetPasswordForm,
-                                  ChangeMasterPasswordForm, ChangePasswordForm,
-                                  ChangeEmailForm)
+                            ChangeMasterPasswordForm, ChangePasswordForm,
+                            ChangeEmailForm)
 from app.models import Password, User
 from flask_login import login_required, current_user
 from app import bcrypt, db
@@ -37,6 +37,7 @@ def index():
             return redirect(url_for('main.index'))
         flash(
             f"Пароль от {add_password_form.password_name.data} - {password.password_content}")
+        return redirect(url_for('main.index'))
     # изменить пароль
     if change_password_form.validate_on_submit():
         password = Password.query.filter_by(
@@ -62,6 +63,11 @@ def index():
 @login_required
 def profile():
     return render_template('profile/profile.html', user=current_user, title="Профиль")
+
+
+@main.route('/about')
+def about():
+    return render_template('main/about.html', title='Помощь')
 
 
 @main.route('/change_master_password', methods=['GET', 'POST'])

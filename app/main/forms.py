@@ -23,9 +23,9 @@ class ChangePasswordForm(FlaskForm):
     password_name = StringField("Аккаунт/сеть", validators=[DataRequired()])
     master_password = PasswordField(
         "Мастер-пароль", validators=[DataRequired()])
-    old_password = PasswordField("Пароль", validators=[DataRequired()])
+    old_password = PasswordField("Старый пароль", validators=[DataRequired()])
     new_password = PasswordField(
-        "Повторите пароль", validators=[DataRequired()])
+        "Новый пароль", validators=[DataRequired()])
     submit = SubmitField("Сменить")
 
 
